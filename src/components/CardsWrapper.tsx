@@ -18,7 +18,7 @@ const CardsWrapper: React.FC = () => {
     console.log(productsState)
     return (
         <section className='cards-wrapper'>
-            {productsState.products && productsState.products.map((item) => {
+            {productsState.products && productsState.products.slice(3, productsState.products.length + 1).map((item) => {
                 return (
                     <CardItem item={item} />
                 )
