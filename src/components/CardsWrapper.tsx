@@ -1,28 +1,33 @@
-import React, { useEffect } from 'react';
-//redux
-import { useSelector, useDispatch } from 'react-redux';
-import { RootStore } from '../store';
-import { getProducts } from '../actions/fetchActions';
+import React from 'react';
 //components
 import CardItem from './CardItem';
 
-const CardsWrapper: React.FC = () => {
+type Product = {
+    id: number,
+    title: string,
+    price: number,
+    brand: string,
+    productType: string,
+    collection: number,
+    url: string,
+    verticalCardUrl?: string
+}
 
-    //redux
-    const dispatch = useDispatch();
-    const productsState = useSelector((state: RootStore) => state.products);
+interface Props {
+    products: undefined | Product[]
+}
 
-    useEffect(() => {
-        dispatch(getProducts());
-    }, [dispatch])
-    console.log(productsState)
+const CardsWrapper: React.FC<Props> = ({ products }) => {
+    console.log(products, "wrapper")
     return (
         <section className='cards-wrapper'>
-            {productsState.products && productsState.products.slice(3, productsState.products.length + 1).map((item) => {
+            {products && products.length > 0 ? products.map((item) => {
                 return (
-                    <CardItem item={item} />
+                    <CardItem key={item.id} item={item} />
                 )
-            })}
+            }) : (
+                <div>Products not found</div>
+            )}
         </section>
     )
 }

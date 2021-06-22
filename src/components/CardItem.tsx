@@ -77,7 +77,7 @@ const CardItem: React.FC<Props> = ({ item }) => {
     };
 
     return (
-        <Card className={classes.root} key={item.id}>
+        <Card className={classes.root}>
             <CardHeader
                 avatar={
                     <Avatar aria-label='recipe' className={classes.avatar}>

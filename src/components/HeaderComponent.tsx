@@ -85,7 +85,6 @@ const HeaderComponent: React.FC = () => {
     const productsState = useSelector((state: RootStore) => state.products);
     const [search, setSearch] = useState("")
     const [products, setProducts] = useState<any>();
-    const [message, setMessage] = useState("");
 
     useEffect(() => {
         dispatch(getProducts());
