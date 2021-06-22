@@ -1,6 +1,7 @@
 import React from 'react';
 //components
 import CardItem from './CardItem';
+import Message from './utils/Message';
 
 type Product = {
     id: number,
@@ -26,7 +27,7 @@ const CardsWrapper: React.FC<Props> = ({ products }) => {
                     <CardItem key={item.id} item={item} />
                 )
             }) : (
-                <div>Products not found</div>
+                <Message message="Products not found" />
             )}
         </section>
     )
