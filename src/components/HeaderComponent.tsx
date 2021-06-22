@@ -1,4 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+//redux
+import { useSelector, useDispatch } from 'react-redux';
+import { RootStore } from '../store';
+import { getProducts } from '../actions/fetchActions';
+//components
+import CardsWrapper from './CardsWrapper';
+//material-ui
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -73,37 +80,73 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const HeaderComponent: React.FC = () => {
     const classes = useStyles();
+    //redux
+    const dispatch = useDispatch();
+    const productsState = useSelector((state: RootStore) => state.products);
+    const [search, setSearch] = useState("")
+    const [products, setProducts] = useState<any>();
+    const [message, setMessage] = useState("");
+
+    useEffect(() => {
+        dispatch(getProducts());
+    }, [dispatch]);
+
+
+    useEffect(() => {
+        setProducts(productsState.products)
+    }, [productsState.products]);
+
+
+    const handleSearch = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setSearch(e.target.value);
+    };
+
+    useEffect(() => {
+        if (search.length > 2 && productsState.products) {
+            const filter = productsState.products.filter((x: { brand: string; }) => x.brand.toLowerCase().startsWith(search.toLowerCase()));
+            setProducts(filter);
+        }
+        if (search.length <= 2 && productsState.products) {
+            setProducts(productsState.products)
+        }
+    }, [search, productsState.products])
+
     return (
-        <div className={classes.root}>
-            <AppBar >
-                <Toolbar>
-                    <IconButton
-                        edge='start'
-                        className={classes.menuButton}
-                        color='inherit'
-                        aria-label="open drawer"
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography className={classes.title} variant="h6" noWrap>
-                        LIXIR
-                    </Typography>
-                    <div className={classes.search}>
-                        <div className={classes.searchIcon}>
-                            <SearchIcon />
+        <>
+            <div className={classes.root}>
+                <AppBar >
+                    <Toolbar>
+                        <IconButton
+                            edge='start'
+                            className={classes.menuButton}
+                            color='inherit'
+                            aria-label='open drawer'
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        <Typography className={classes.title} variant='h6' noWrap>
+                            LIXIR
+                        </Typography>
+                        <div className={classes.search}>
+                            <div className={classes.searchIcon}>
+                                <SearchIcon />
+                            </div>
+                            <InputBase
+                                placeholder='Search…'
+                                classes={{
+                                    root: classes.inputRoot,
+                                    input: classes.inputInput,
+                                }}
+                                inputProps={{ 'aria-label': 'search' }}
+                                onChange={(e) => handleSearch(e)}
+                                value={search}
+                            />
                         </div>
-                        <InputBase
-                            placeholder="Search…"
-                            classes={{
-                                root: classes.inputRoot,
-                                input: classes.inputInput,
-                            }}
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </div>
-                </Toolbar>
-            </AppBar>
-        </div>
+                    </Toolbar>
+                </AppBar>
+            </div>
+            <CardsWrapper products={products} />
+        </>
     )
 }
 
