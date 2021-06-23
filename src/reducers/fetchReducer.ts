@@ -2,8 +2,11 @@ import {
     GET_PRODUCTS_LOADING,
     GET_PRODUCTS_SUCCESS,
     GET_PRODUCTS_FAIL,
+    ASC,
+    DSC,
     Product,
-    ProductsDispatchTypes
+    ProductsDispatchTypes,
+    SortProductsDispatchTypes
 } from '../actions/types';
 
 
@@ -33,12 +36,36 @@ export const  fetchReducer =  (state = initialState, action: ProductsDispatchTyp
             loading: false,
             products: action.payload,
         }
+
         case GET_PRODUCTS_FAIL:
             return {
             ...state,
             loading: false,
-            message: action.message
+            message: "Something went wrong"
             }
+        default:
+            return state;
+    }
+}
+
+
+export const  sortReducer =  (state = initialState, action: SortProductsDispatchTypes): InitialState =>{
+
+    switch (action.type) {
+        case ASC:
+        console.log(action.payload, "ASC REDUCER")
+        return {
+            ...state,
+            loading: false,
+            products: action.payload,
+        }
+        case DSC:
+        console.log(action.payload, "DSC REDUCER")
+        return {
+            ...state,
+            loading: false,
+            products: action.payload,
+        }
         default:
             return state;
     }

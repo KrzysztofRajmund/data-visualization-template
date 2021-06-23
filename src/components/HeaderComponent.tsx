@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 //redux
 import { useSelector, useDispatch } from 'react-redux';
 import { RootStore } from '../store';
-import { getProducts } from '../actions/fetchActions';
+import { getProducts, sortProducts } from '../actions/fetchActions';
 //components
 import CardsWrapper from './CardsWrapper';
+import SortButton from './SortButton';
 //material-ui
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -14,6 +15,9 @@ import InputBase from '@material-ui/core/InputBase';
 import { createStyles, fade, Theme, makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
+import Badge from '@material-ui/core/Badge';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -73,6 +77,13 @@ const useStyles = makeStyles((theme: Theme) =>
                 },
             },
         },
+        badge: {
+            marginLeft: '1.5rem',
+            color: '#fff',
+        },
+        badgeHeart: {
+            color: 'lightblue',
+        },
     }),
 );
 
@@ -82,7 +93,10 @@ const HeaderComponent: React.FC = () => {
     const classes = useStyles();
     //redux
     const dispatch = useDispatch();
+    const dispatchSort = useDispatch();
+    const favState = useSelector((state: RootStore) => state.favProducts);
     const productsState = useSelector((state: RootStore) => state.products);
+    const productsStateSorted = useSelector((state: RootStore) => state.sortedProducts);
     const [search, setSearch] = useState("")
     const [products, setProducts] = useState<any>();
 
@@ -92,8 +106,12 @@ const HeaderComponent: React.FC = () => {
 
 
     useEffect(() => {
-        setProducts(productsState.products)
+        setProducts(productsState.products);
     }, [productsState.products]);
+
+    useEffect(() => {
+        setProducts(productsStateSorted.products);
+    }, [productsStateSorted.products]);
 
 
     const handleSearch = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -108,10 +126,22 @@ const HeaderComponent: React.FC = () => {
         if (search.length <= 2 && productsState.products) {
             setProducts(productsState.products)
         }
+        return () => setProducts([]);
     }, [search, productsState.products])
 
+    const sortItems = (x: string) => {
+        console.log(x)
+        if (x === "default") {
+            dispatch(getProducts());
+            setProducts(productsState.products);
+        }
+        dispatchSort(sortProducts(x));
+        setProducts(productsStateSorted.products);
+    }
+
+    console.log(productsStateSorted.products, "header productStateSorted")
     return (
-        <>
+        <section className="header-container">
             <div className={classes.root}>
                 <AppBar >
                     <Toolbar>
@@ -141,11 +171,15 @@ const HeaderComponent: React.FC = () => {
                                 value={search}
                             />
                         </div>
+                        <Badge className={classes.badge} badgeContent={favState.favProducts && favState.favProducts.length}>
+                            <FavoriteIcon className={classes.badgeHeart} fontSize='large' />
+                        </Badge>
                     </Toolbar>
                 </AppBar>
             </div>
+            <SortButton sortItems={sortItems} />
             <CardsWrapper products={products} />
-        </>
+        </section>
     )
 }
 

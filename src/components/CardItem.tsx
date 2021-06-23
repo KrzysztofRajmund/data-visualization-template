@@ -1,4 +1,9 @@
 import React, { useState } from 'react';
+//redux
+import { useSelector, useDispatch } from 'react-redux';
+import { RootStore } from '../store';
+import { favAddProducts, favDeleteProducts } from '../actions/addProducts';
+//material-ui
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -70,11 +75,32 @@ interface Props {
 
 const CardItem: React.FC<Props> = ({ item }) => {
     const classes = useStyles();
+
+    const dispatch = useDispatch();
+    const favState = useSelector((state: RootStore) => state.favProducts);
+
+    // useEffect(() => {
+    //     dispatch(favAddProducts(item));
+    // }, [dispatch]);
     const [expanded, setExpanded] = useState(false);
+    const [heart, setHeart] = useState(true);
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
+
+    const handleAddHeartItem = (item: Item) => {
+        console.log(item.id);
+        dispatch(favAddProducts(item));
+        console.log(favState.favProducts, "FAV STATE")
+        setHeart(!heart)
+    }
+
+    const handleDeleteHeartItem = (item: Item) => {
+        dispatch(favDeleteProducts(item));
+        console.log(favState.favProducts, "DELETE FAV STATE")
+        setHeart(!heart)
+    }
 
     return (
         <Card className={classes.root}>
@@ -85,9 +111,10 @@ const CardItem: React.FC<Props> = ({ item }) => {
                     </Avatar>
                 }
                 action={
-                    <IconButton aria-label='add to favorites'>
-                        <FavoriteBorderIcon fontSize='large' />
-                        {/* <FavoriteIcon fontSize='large' /> */}
+                    <IconButton onClick={heart ? () => handleAddHeartItem(item) : () => handleDeleteHeartItem(item)} aria-label='add to favorites'>
+                        {heart ? <FavoriteBorderIcon fontSize='large' /> : (
+                            <FavoriteIcon fontSize='large' />
+                        )}
                     </IconButton>
                 }
                 title={item.title}
@@ -100,7 +127,7 @@ const CardItem: React.FC<Props> = ({ item }) => {
             />
             <CardActions disableSpacing>
                 <h4 className={classes.cardPrice}>{item.price} PLN</h4>
-                <s>299,99 PLN</s>
+                <s>{item.price + 25.99} PLN</s>
                 <IconButton
                     className={clsx(classes.expand, {
                         [classes.expandOpen]: expanded,
