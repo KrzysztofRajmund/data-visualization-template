@@ -43,6 +43,7 @@ const SortButton: React.FC<Props> = ({ sortItems }) => {
 
 
     const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+        event.preventDefault()
         setSort(event.target.value as string);
         sortItems(event.target.value as string);
     };

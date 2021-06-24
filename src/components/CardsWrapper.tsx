@@ -2,6 +2,7 @@ import React from 'react';
 //components
 import CardItem from './CardItem';
 import Message from './utils/Message';
+import Loading from './utils/Loading';
 
 type Product = {
     id: number,
@@ -15,10 +16,11 @@ type Product = {
 }
 
 interface Props {
-    products: undefined | Product[]
+    products: undefined | Product[],
+    loading: boolean
 }
 
-const CardsWrapper: React.FC<Props> = ({ products }) => {
+const CardsWrapper: React.FC<Props> = ({ products, loading }) => {
     console.log(products, "wrapper")
     return (
         <section className='cards-wrapper'>
@@ -27,7 +29,7 @@ const CardsWrapper: React.FC<Props> = ({ products }) => {
                     <CardItem key={item.id} item={item} />
                 )
             }) : (
-                <Message message="Products not found" />
+                loading ? <Loading /> : <Message message="Products not found" />
             )}
         </section>
     )

@@ -17,7 +17,7 @@ interface InitialState {
 }
 
 const initialState: InitialState = {
-    loading: false,
+    loading: true,
     products: [],
     message:""
 
@@ -52,6 +52,12 @@ export const  fetchReducer =  (state = initialState, action: ProductsDispatchTyp
 export const  sortReducer =  (state = initialState, action: SortProductsDispatchTypes): InitialState =>{
 
     switch (action.type) {
+
+        case GET_PRODUCTS_LOADING:
+        return {
+            loading: true
+        }
+
         case ASC:
         console.log(action.payload, "ASC REDUCER")
         return {

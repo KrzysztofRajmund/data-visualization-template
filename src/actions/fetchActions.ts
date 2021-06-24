@@ -21,11 +21,12 @@ try {
    const url = "https://marketplace-api-sklep.herokuapp.com/items";
    const  response = await fetch(url);
    const data = await response.json();
-
+setTimeout(()=>{
    dispatch({
        type: GET_PRODUCTS_SUCCESS,
        payload: data
    })
+},1000)
 
 } catch (error) {
     dispatch({
@@ -43,16 +44,21 @@ export const sortProducts = (x: string) => async (dispatch:Dispatch<SortProducts
    const data = await response.json();
    if (x === "asc"){
     const sortedDataAscending = data.sort((a:any,b:any)=> a.price - b.price);
-    console.log("ASC ACTION")
-   dispatch({
+       dispatch({
+        type:  GET_PRODUCTS_LOADING
+    })
+      dispatch({
        type: ASC,
        payload: sortedDataAscending
    })
+
    }
 
    if (x === "dsc"){
-           console.log("DSC ACTION")
           const sortedDataDescending = data.sort((a:any,b:any)=> b.price - a.price);
+    dispatch({
+        type:  GET_PRODUCTS_LOADING
+    })
    dispatch({
         type: DSC,
         payload: sortedDataDescending

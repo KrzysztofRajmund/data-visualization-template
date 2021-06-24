@@ -107,7 +107,7 @@ const HeaderComponent: React.FC = () => {
 
     useEffect(() => {
         setProducts(productsState.products);
-    }, [productsState.products]);
+    }, [productsState]);
 
     useEffect(() => {
         setProducts(productsStateSorted.products);
@@ -130,7 +130,6 @@ const HeaderComponent: React.FC = () => {
     }, [search, productsState.products])
 
     const sortItems = (x: string) => {
-        console.log(x)
         if (x === "default") {
             dispatch(getProducts());
             setProducts(productsState.products);
@@ -139,7 +138,7 @@ const HeaderComponent: React.FC = () => {
         setProducts(productsStateSorted.products);
     }
 
-    console.log(productsStateSorted.products, "header productStateSorted")
+    console.log(productsState, "state")
     return (
         <section className="header-container">
             <div className={classes.root}>
@@ -178,7 +177,7 @@ const HeaderComponent: React.FC = () => {
                 </AppBar>
             </div>
             <SortButton sortItems={sortItems} />
-            <CardsWrapper products={products} />
+            <CardsWrapper products={products} loading={productsState.loading} />
         </section>
     )
 }
