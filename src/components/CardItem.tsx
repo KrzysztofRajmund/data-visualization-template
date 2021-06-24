@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 //redux
-import { useSelector, useDispatch } from 'react-redux';
-import { RootStore } from '../store';
+import { useDispatch } from 'react-redux';
 import { favAddProducts, favDeleteProducts } from '../actions/addProducts';
 //material-ui
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
@@ -29,13 +28,28 @@ const useStyles = makeStyles((theme: Theme) =>
             flex: '30%',
             margin: '1rem',
             borderRadius: '0rem',
-            boxShadow: 'none'
+            boxShadow: 'none',
+            '& .MuiSvgIcon-root': {
+                zIndex: 100,
+            },
+            '& .MuiCardHeader-title': {
+                fontSize: '1.2rem',
+                color: 'rgb(0, 0, 0)',
+            }
         },
         media: {
+            zIndex: 5,
+            transition: '0.2s transform linear',
             paddingTop: '100%',
-            cursor: 'pointer'
+            cursor: 'pointer',
+
+            '&:hover': {
+                opacity: 0.4,
+                transform: 'scale(1.5)',
+            }
         },
         expand: {
+            zIndex: 100,
             transform: 'rotate(0deg)',
             marginLeft: 'auto',
             borderRadius: '0rem',
@@ -54,7 +68,9 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         cardPrice: {
             marginRight: '0.8rem',
-        }
+            fontSize: '1.4rem',
+            color: 'rgb(0, 0, 0, 0.5)',
+        },
     }),
 );
 
@@ -77,11 +93,6 @@ const CardItem: React.FC<Props> = ({ item }) => {
     const classes = useStyles();
 
     const dispatch = useDispatch();
-    const favState = useSelector((state: RootStore) => state.favProducts);
-
-    // useEffect(() => {
-    //     dispatch(favAddProducts(item));
-    // }, [dispatch]);
     const [expanded, setExpanded] = useState(false);
     const [heart, setHeart] = useState(true);
 
@@ -90,17 +101,14 @@ const CardItem: React.FC<Props> = ({ item }) => {
     };
 
     const handleAddHeartItem = (item: Item) => {
-        console.log(item.id);
         dispatch(favAddProducts(item));
-        console.log(favState.favProducts, "FAV STATE")
-        setHeart(!heart)
-    }
+        setHeart(!heart);
+    };
 
     const handleDeleteHeartItem = (item: Item) => {
         dispatch(favDeleteProducts(item));
-        console.log(favState.favProducts, "DELETE FAV STATE")
-        setHeart(!heart)
-    }
+        setHeart(!heart);
+    };
 
     return (
         <Card className={classes.root}>
@@ -127,7 +135,7 @@ const CardItem: React.FC<Props> = ({ item }) => {
             />
             <CardActions disableSpacing>
                 <h4 className={classes.cardPrice}>{item.price} PLN</h4>
-                <s>{item.price + 25.99} PLN</s>
+                <s>{(item.price + 25.99).toFixed(2)} PLN</s>
                 <IconButton
                     className={clsx(classes.expand, {
                         [classes.expandOpen]: expanded,

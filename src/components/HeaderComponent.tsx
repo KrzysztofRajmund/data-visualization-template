@@ -101,7 +101,9 @@ const HeaderComponent: React.FC = () => {
     const [products, setProducts] = useState<any>();
 
     useEffect(() => {
-        dispatch(getProducts());
+        setTimeout(() => {
+            dispatch(getProducts());
+        }, 1000)
     }, [dispatch]);
 
 
@@ -111,7 +113,7 @@ const HeaderComponent: React.FC = () => {
 
     useEffect(() => {
         setProducts(productsStateSorted.products);
-    }, [productsStateSorted.products]);
+    }, [productsStateSorted]);
 
 
     const handleSearch = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -127,7 +129,7 @@ const HeaderComponent: React.FC = () => {
             setProducts(productsState.products)
         }
         return () => setProducts([]);
-    }, [search, productsState.products])
+    }, [search, productsState])
 
     const sortItems = (x: string) => {
         if (x === "default") {
@@ -137,8 +139,6 @@ const HeaderComponent: React.FC = () => {
         dispatchSort(sortProducts(x));
         setProducts(productsStateSorted.products);
     }
-
-    console.log(productsState, "state")
     return (
         <section className="header-container">
             <div className={classes.root}>

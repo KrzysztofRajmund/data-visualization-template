@@ -7,6 +7,7 @@ const useStyles = makeStyles((theme: Theme) =>
         root: {
             transiton: 'all 0.5s easy-in-out',
             display: 'flex',
+            backgroundColor: 'transparent',
             '& > * + *': {
                 marginLeft: theme.spacing(2),
             },

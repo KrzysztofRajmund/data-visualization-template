@@ -21,7 +21,6 @@ interface Props {
 }
 
 const CardsWrapper: React.FC<Props> = ({ products, loading }) => {
-    console.log(products, "wrapper")
     return (
         <section className='cards-wrapper'>
             {products && products.length > 0 ? products.map((item) => {

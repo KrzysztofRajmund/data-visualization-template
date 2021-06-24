@@ -50,23 +50,19 @@ export const  fetchReducer =  (state = initialState, action: ProductsDispatchTyp
 
 
 export const  sortReducer =  (state = initialState, action: SortProductsDispatchTypes): InitialState =>{
-
     switch (action.type) {
-
         case GET_PRODUCTS_LOADING:
         return {
             loading: true
         }
 
         case ASC:
-        console.log(action.payload, "ASC REDUCER")
         return {
             ...state,
             loading: false,
             products: action.payload,
         }
         case DSC:
-        console.log(action.payload, "DSC REDUCER")
         return {
             ...state,
             loading: false,
