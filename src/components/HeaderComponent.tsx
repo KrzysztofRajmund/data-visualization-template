@@ -176,7 +176,7 @@ const HeaderComponent: React.FC = () => {
                                 <SearchIcon />
                             </div>
                             <InputBase
-                                placeholder='Search…'
+                                placeholder='Search brand'
                                 classes={{
                                     root: classes.inputRoot,
                                     input: classes.inputInput,

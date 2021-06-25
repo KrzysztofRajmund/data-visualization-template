@@ -3,6 +3,8 @@
 Simple display for clothing shop with brand search input on all products and filtered products.
 You can add favourite product to localStorage.
 
+search input can be expanded for: search by : title, collection , productType
+
 For scalable purposes:
 separate states were created for fetch all products, sort and add/favourite product.
 
