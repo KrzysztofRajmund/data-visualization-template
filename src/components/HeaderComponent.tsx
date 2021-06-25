@@ -94,6 +94,7 @@ const HeaderComponent: React.FC = () => {
     //redux
     const dispatch = useDispatch();
     const dispatchSort = useDispatch();
+    const state = useSelector((state: RootStore) => state);
     const favState = useSelector((state: RootStore) => state.favProducts);
     const productsState = useSelector((state: RootStore) => state.products);
     const productsStateSorted = useSelector((state: RootStore) => state.sortedProducts);
@@ -151,8 +152,9 @@ const HeaderComponent: React.FC = () => {
         setProducts(productsStateSorted.products);
     };
 
-    console.log(productsState, "productState")
-    console.log(productsStateSorted, "Sorted")
+    // console.log(productsState, "productState")
+    // console.log(productsStateSorted, "Sorted")
+    console.log(state, "STATE")
     return (
         <section className='header-container'>
             <div className={classes.root}>
@@ -191,7 +193,7 @@ const HeaderComponent: React.FC = () => {
                 </AppBar>
             </div>
             <SortButton sortItems={sortItems} />
-            <CardsWrapper products={products} loading={productsStateSorted.loading} />
+            <CardsWrapper products={products} loading={productsStateSorted.loading && productsState.loading} />
         </section>
     );
 };
