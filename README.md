@@ -1,6 +1,6 @@
 # Getting Started with Data Visualization Template:
 
-Simple display for clothing shop with search input on all products and filtered products.
+Simple display for clothing shop with brand search input on all products and filtered products.
 You can add favourite product to localStorage.
 
 For scalable purposes:
