@@ -150,6 +150,7 @@ const HeaderComponent: React.FC = () => {
         dispatchSort(sortProducts(x));
         setProducts(productsStateSorted.products);
     };
+
     return (
         <section className='header-container'>
             <div className={classes.root}>
