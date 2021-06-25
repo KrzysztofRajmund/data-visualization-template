@@ -66,7 +66,6 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         inputInput: {
             padding: theme.spacing(1, 1, 1, 0),
-            // vertical padding + font size from searchIcon
             paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
             transition: theme.transitions.create('width'),
             width: '100%',
@@ -97,48 +96,50 @@ const HeaderComponent: React.FC = () => {
     const favState = useSelector((state: RootStore) => state.favProducts);
     const productsState = useSelector((state: RootStore) => state.products);
     const productsStateSorted = useSelector((state: RootStore) => state.sortedProducts);
+    //useState
     const [search, setSearch] = useState("")
     const [products, setProducts] = useState<any>();
 
+    //dispatch on first page load
     useEffect(() => {
         setTimeout(() => {
             dispatch(getProducts());
         }, 1000)
     }, [dispatch]);
 
-
+    //onchange of productsState
     useEffect(() => {
         setProducts(productsState.products);
     }, [productsState]);
-
+    //onchange of productsStateSorted
     useEffect(() => {
         setProducts(productsStateSorted.products);
     }, [productsStateSorted]);
 
-
+    //input search handler
     const handleSearch = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setSearch(e.target.value);
     };
-
+    //onchange od serach input + products state
     useEffect(() => {
         if (search.length > 2 && productsState.products) {
             const filter = productsState.products.filter((x: { brand: string; }) => x.brand.toLowerCase().startsWith(search.toLowerCase()));
             setProducts(filter);
-        }
+        };
         if (search.length <= 2 && productsState.products) {
-            setProducts(productsState.products)
-        }
-        return () => setProducts([]);
-    }, [search, productsState])
+            setProducts(productsState.products);
+        };
+    }, [search, productsState]);
 
+    //sort item handler
     const sortItems = (x: string) => {
         if (x === "default") {
             dispatch(getProducts());
             setProducts(productsState.products);
-        }
+        };
         dispatchSort(sortProducts(x));
         setProducts(productsStateSorted.products);
-    }
+    };
     return (
         <section className="header-container">
             <div className={classes.root}>
@@ -179,7 +180,7 @@ const HeaderComponent: React.FC = () => {
             <SortButton sortItems={sortItems} />
             <CardsWrapper products={products} loading={productsState.loading} />
         </section>
-    )
-}
+    );
+};
 
 export default HeaderComponent;

@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface Props {
     sortItems: (x: string) => void
-}
+};
 
 const SortButton: React.FC<Props> = ({ sortItems }) => {
     const classes = useStyles();
@@ -43,7 +43,7 @@ const SortButton: React.FC<Props> = ({ sortItems }) => {
 
 
     const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-        event.preventDefault()
+        event.preventDefault();
         setSort(event.target.value as string);
         sortItems(event.target.value as string);
     };
@@ -66,7 +66,7 @@ const SortButton: React.FC<Props> = ({ sortItems }) => {
                 <option className={classes.option} value='dsc'>Price DSC</option>
             </NativeSelect>
         </FormControl>
-    )
-}
+    );
+};
 
 export default SortButton;

@@ -5,7 +5,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            transiton: 'all 0.5s easy-in-out',
+            transiton: 'all 0.5s ease-in-out',
             display: 'flex',
             backgroundColor: 'transparent',
             '& > * + *': {
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const Loading = () => {
+const Loading: React.FC = () => {
     const classes = useStyles();
 
     return (

@@ -13,12 +13,12 @@ type Product = {
     collection: number,
     url: string,
     verticalCardUrl?: string
-}
+};
 
 interface Props {
     products: undefined | Product[],
     loading: boolean
-}
+};
 
 const CardsWrapper: React.FC<Props> = ({ products, loading }) => {
     return (
@@ -31,7 +31,7 @@ const CardsWrapper: React.FC<Props> = ({ products, loading }) => {
                 loading ? <Loading /> : <Message message="Products not found" />
             )}
         </section>
-    )
-}
+    );
+};
 
 export default CardsWrapper;

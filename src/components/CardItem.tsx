@@ -39,13 +39,13 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         media: {
             zIndex: 5,
-            transition: '0.2s transform linear',
+            transition: 'transform 0.3s ease-in-out',
             paddingTop: '100%',
             cursor: 'pointer',
 
             '&:hover': {
                 opacity: 0.4,
-                transform: 'scale(1.5)',
+                transform: 'scale(1.6)',
             }
         },
         expand: {
@@ -83,11 +83,11 @@ type Item = {
     collection: number,
     url: string,
     verticalCardUrl?: string
-}
+};
 
 interface Props {
     item: Item
-}
+};
 
 const CardItem: React.FC<Props> = ({ item }) => {
     const classes = useStyles();
@@ -114,7 +114,7 @@ const CardItem: React.FC<Props> = ({ item }) => {
         <Card className={classes.root}>
             <CardHeader
                 avatar={
-                    <Avatar aria-label='recipe' className={classes.avatar}>
+                    <Avatar aria-label='brand' className={classes.avatar}>
                         {item.brand.slice(0, 1)}
                     </Avatar>
                 }
@@ -156,7 +156,7 @@ const CardItem: React.FC<Props> = ({ item }) => {
                 </CardContent>
             </Collapse>
         </Card>
-    )
-}
+    );
+};
 
 export default CardItem;

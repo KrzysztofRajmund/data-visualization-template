@@ -27,7 +27,7 @@ const Message: React.FC<Props> = ({ message }) => {
         <div className={classes.root}>
             <Alert severity="info">{message}</Alert>
         </div>
-    )
-}
+    );
+};
 
-export default Message
+export default Message;
