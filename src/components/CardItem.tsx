@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 //redux
 import { useDispatch } from 'react-redux';
 import { favAddProducts, favDeleteProducts } from '../actions/addProducts';
+import { Product } from '../actions/types';
 //material-ui
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
@@ -74,19 +75,8 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-type Item = {
-    id: number,
-    title: string,
-    price: number,
-    brand: string,
-    productType: string,
-    collection: number,
-    url: string,
-    verticalCardUrl?: string
-};
-
 interface Props {
-    item: Item
+    item: Product
 };
 
 const CardItem: React.FC<Props> = ({ item }) => {
@@ -100,12 +90,12 @@ const CardItem: React.FC<Props> = ({ item }) => {
         setExpanded(!expanded);
     };
 
-    const handleAddHeartItem = (item: Item) => {
+    const handleAddHeartItem = (item: Product) => {
         dispatch(favAddProducts(item));
         setHeart(!heart);
     };
 
-    const handleDeleteHeartItem = (item: Item) => {
+    const handleDeleteHeartItem = (item: Product) => {
         dispatch(favDeleteProducts(item));
         setHeart(!heart);
     };

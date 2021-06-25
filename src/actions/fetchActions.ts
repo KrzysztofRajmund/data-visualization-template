@@ -37,7 +37,8 @@ try {
 
 export const sortProducts = (x: string) => async (dispatch:Dispatch<SortProductsDispatchTypes>) => {
 
-   const url = "https://marketplace-api-sklep.herokuapp.com/items";
+   try {
+       const url = "https://marketplace-api-sklep.herokuapp.com/items";
    const  response = await fetch(url);
    const data = await response.json();
    if (x === "asc"){
@@ -65,7 +66,12 @@ export const sortProducts = (x: string) => async (dispatch:Dispatch<SortProducts
         payload: sortedDataDescending
     })
        },1000)
-   } else {
-       return;
+   } 
+       
+   } catch (error) {
+       dispatch({
+        type: GET_PRODUCTS_FAIL,
+        message: error.message + "Problem to load products"
+    })
    }
   }

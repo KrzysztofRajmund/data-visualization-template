@@ -56,7 +56,7 @@ export interface Descending {
     payload: Product[]
 }
 
-export type   SortProductsDispatchTypes = Ascending | Descending | GetProductsLoading;
+export type   SortProductsDispatchTypes = Ascending | Descending | GetProductsLoading | GetProductsFail;
 
 //add product
 export interface FavAddProduct {

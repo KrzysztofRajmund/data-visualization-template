@@ -68,6 +68,13 @@ export const  sortReducer =  (state = initialState, action: SortProductsDispatch
             loading: false,
             products: action.payload,
         }
+
+        case GET_PRODUCTS_FAIL:
+            return {
+            ...state,
+            loading: false,
+            message: "Something went wrong"
+            }
         default:
             return state;
     }

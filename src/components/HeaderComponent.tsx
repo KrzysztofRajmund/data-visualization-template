@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootStore } from '../store';
 import { getProducts, sortProducts } from '../actions/fetchActions';
+import { Product } from '../actions/types';
 //components
 import CardsWrapper from './CardsWrapper';
 import SortButton from './SortButton';
@@ -98,7 +99,7 @@ const HeaderComponent: React.FC = () => {
     const productsStateSorted = useSelector((state: RootStore) => state.sortedProducts);
     //useState
     const [search, setSearch] = useState('')
-    const [products, setProducts] = useState<any>();
+    const [products, setProducts] = useState<Product[]>();
 
     //dispatch on first page load
     useEffect(() => {
@@ -122,14 +123,23 @@ const HeaderComponent: React.FC = () => {
     };
     //onchange od serach input + products state
     useEffect(() => {
-        if (search.length > 2 && productsState.products) {
-            const filter = productsState.products.filter((x: { brand: string; }) => x.brand.toLowerCase().startsWith(search.toLowerCase()));
-            setProducts(filter);
-        };
         if (search.length <= 2 && productsState.products) {
             setProducts(productsState.products);
         };
-    }, [search, productsState]);
+
+        if (search.length <= 2 && productsStateSorted.products) {
+            setProducts(productsStateSorted.products);
+        };
+
+        if (search.length > 2 && productsState.products) {
+            const filter = productsState.products.filter((x: { brand: string; }) => x.brand.toLowerCase().startsWith(search.toLowerCase()));
+            setProducts(filter);
+        } if (search.length > 2 && productsStateSorted.products) {
+            const filter = productsStateSorted.products.filter((x: { brand: string; }) => x.brand.toLowerCase().startsWith(search.toLowerCase()));
+            setProducts(filter);
+        }
+
+    }, [search]);
 
     //sort item handler
     const sortItems = (x: string) => {
@@ -140,6 +150,9 @@ const HeaderComponent: React.FC = () => {
         dispatchSort(sortProducts(x));
         setProducts(productsStateSorted.products);
     };
+
+    console.log(productsState, "productState")
+    console.log(productsStateSorted, "Sorted")
     return (
         <section className='header-container'>
             <div className={classes.root}>
@@ -178,7 +191,7 @@ const HeaderComponent: React.FC = () => {
                 </AppBar>
             </div>
             <SortButton sortItems={sortItems} />
-            <CardsWrapper products={products} loading={productsState.loading} />
+            <CardsWrapper products={products} loading={productsStateSorted.loading} />
         </section>
     );
 };

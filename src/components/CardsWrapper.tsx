@@ -3,17 +3,8 @@ import React from 'react';
 import CardItem from './CardItem';
 import Message from './utils/Message';
 import Loading from './utils/Loading';
-
-type Product = {
-    id: number,
-    title: string,
-    price: number,
-    brand: string,
-    productType: string,
-    collection: number,
-    url: string,
-    verticalCardUrl?: string
-};
+//redux
+import { Product } from '../actions/types';
 
 interface Props {
     products: undefined | Product[],
