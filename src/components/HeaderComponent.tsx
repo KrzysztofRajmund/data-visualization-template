@@ -97,7 +97,7 @@ const HeaderComponent: React.FC = () => {
     const productsState = useSelector((state: RootStore) => state.products);
     const productsStateSorted = useSelector((state: RootStore) => state.sortedProducts);
     //useState
-    const [search, setSearch] = useState("")
+    const [search, setSearch] = useState('')
     const [products, setProducts] = useState<any>();
 
     //dispatch on first page load
@@ -133,7 +133,7 @@ const HeaderComponent: React.FC = () => {
 
     //sort item handler
     const sortItems = (x: string) => {
-        if (x === "default") {
+        if (x === 'default') {
             dispatch(getProducts());
             setProducts(productsState.products);
         };
@@ -141,7 +141,7 @@ const HeaderComponent: React.FC = () => {
         setProducts(productsStateSorted.products);
     };
     return (
-        <section className="header-container">
+        <section className='header-container'>
             <div className={classes.root}>
                 <AppBar >
                     <Toolbar>

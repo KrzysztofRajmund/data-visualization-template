@@ -41,7 +41,7 @@ const SortButton: React.FC<Props> = ({ sortItems }) => {
     const classes = useStyles();
     const [sort, setSort] = useState('');
 
-
+    //input change handler
     const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
         event.preventDefault();
         setSort(event.target.value as string);
@@ -54,15 +54,15 @@ const SortButton: React.FC<Props> = ({ sortItems }) => {
     return (
         <FormControl className={classes.formControl} >
             <NativeSelect
-                id="demo-simple-select"
+                id='demo-simple-select'
                 className={classes.selectEmpty}
                 value={sort}
-                name="sort"
+                name='sort'
                 onChange={handleChange}
             >
-                <option className={classes.option} value="" disabled hidden>Sort By</option>
-                <option className={classes.option} value="default">Default order</option>
-                <option className={classes.option} value="asc">Price ASC</option>
+                <option className={classes.option} value='' disabled hidden>Sort By</option>
+                <option className={classes.option} value='default'>Default order</option>
+                <option className={classes.option} value='asc'>Price ASC</option>
                 <option className={classes.option} value='dsc'>Price DSC</option>
             </NativeSelect>
         </FormControl>
